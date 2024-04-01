@@ -1,0 +1,2335 @@
+﻿<!-- NCHS CRM Layout Page -->
+@*@{
+        string currentUserServer = (Request.ServerVariables["LOGON_USER"]) != "" ? Request.ServerVariables["LOGON_USER"] : System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+
+        string currentUser = currentUserServer;
+        string currentUserId = currentUser.Substring(currentUserServer.LastIndexOf("\\", StringComparison.Ordinal) + 1).ToUpper();
+
+        string loggedUsername = Session["Name"] as string;
+    }*@
+@{
+    string loggedUserName = Session["Name"] as string;
+    string loggedUserRole = Session["Role"] as string;
+    string loggedUserID = Session["UserID"] as string;
+    string loggeduserDesignation = Session["Designation"] as string;
+    string loggeduserTarget = Session["Target"] as string;
+    string active = Session["Active"] as string;
+    string loggeduserUsername = Session["Username"] as string;
+    string imageurl = Session["ImageURl"] as string;
+
+}
+
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hotel Management</title>
+    <link rel="icon" href="~/Images/NCHS_ICON.Ico" type="image/x-icon">
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="~/AdminLTE/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/AdminLTE/components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Ionicons -->
+    <link href="~/AdminLTE/components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
+
+    <!-- Theme style -->
+    <link href="~/AdminLTE/components/adminLTE/css/AdminLTE.css" rel="stylesheet" />
+
+    <!-- Theme style -->
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-red.min.css" rel="stylesheet" />
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-blue.min.css" rel="stylesheet" />
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-purple-light.min.css" rel="stylesheet" />
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-green.min.css" rel="stylesheet" />
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-white.css" rel="stylesheet" />
+    <link href="~/AdminLTE/components/adminLTE/css/skins/skin-white-light.min.css" rel="stylesheet" />
+
+    <!-- Jquery-->
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/AdminLTE/components/bootstrap/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE/components/adminLTE/js/adminlte.js"></script>
+
+    <!-- Toggle Button-->
+    <link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap2-toggle.min.js"></script>
+    <!-- Jquery-->
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
+    @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+
+
+
+    @*DataTables*@
+    <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+
+    <!-- Date Time-->
+    <link href="~/Content/DateTimes/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/DateTime/jquery.datetimepicker.full.js"></script>
+    <link href="~/Content/jquery.timepicker.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">*@
+    @*<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>*@
+    <script src="~/Scripts/jquery.timepicker.min.js"></script>
+    <script src="~/Scripts/jquery-TimePicker-1.0.0.js"></script>
+
+    @*Sweet Alert*@
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+
+    @*Toastr*@
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.min.js"></script>
+
+    <!-- CRM Script-->
+    <script src="~/Scripts/Page_Scripts/Master.js"></script>
+
+    <script type="text/javascript">
+            var commonStrings = {
+                CurrentUser: '@loggedUserID',
+                LoggedUserUsername:'@loggeduserUsername',
+                ActiveStatus: '@active',
+                LoggeduserTarget: '@loggeduserTarget',
+                LoggeduserRole:'@loggedUserRole'
+            };
+    </script>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">
+                    <b>
+                        Hotel
+                    </b>
+                </span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">Hotel Management</span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation" style="border-bottom-style: solid;border-bottom-width: thin;  border-bottom-color:#ffcb08">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        @{
+                            if (loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li class="dropdown user user-menu">
+
+                                    <a href="@Url.Action("NewStudents", "Student")">
+                                        <i class="fa fa-child"></i>
+                                        <span class="label label-default" id="new_notification"></span>
+                                    </a>
+
+
+                                </li>
+                            }
+                            if (loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li class="dropdown user user-menu">
+
+                                    <a href="@Url.Action("Appoinments", "Student")">
+                                        <i class="fa fa-calendar"></i>
+                                        <span class="label label-default" id="crm_Appoinments"></span>
+                                    </a>
+
+
+                                </li>
+                            }
+                            if (loggedUserRole == "Counselor" || loggedUserRole == "CallCenter" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li class="dropdown user user-menu">
+
+                                    <a href="@Url.Action("BulkNotificationList", "Notification")">
+                                        <i class="fa fa-users"></i>
+                                        <span class="label label-default" id="bulk_notification"></span>
+                                    </a>
+
+
+                                </li>
+                            }
+                            if (loggedUserRole == "Counselor" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li class="dropdown user user-menu">
+
+                                    <a href="@Url.Action("NotificationList", "Notification")">
+                                        <i class="fa fa-bell"></i>
+                                        <span class="label label-default" id="user_notification"></span>
+                                    </a>
+
+                                </li>
+
+                            }
+                            if (loggedUserRole == "Admin" || loggedUserRole == "Reception" || loggedUserRole == "Manager" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li class="dropdown user user-menu">
+
+                                    <a href="@Url.Action("ALLNotificationList", "Notification")">
+                                        <i class="fa fa-list"></i>
+                                        <span class="label label-default" id=""></span>
+                                    </a>
+
+
+                                </li>
+                            }
+                        }
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                @*<img src="./components/adminLTE/img/user2-160x160.jpg" class="user-image" alt="User Image">*@
+                                <img src="~/AdminLTE/components/adminLTE/img/@imageurl" class="user-image" alt="User Image" />
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs" id="user-account-name-navbar">@loggedUserName</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="~/AdminLTE/components/adminLTE/img/@imageurl" class="img-circle" alt="User Image">
+                                    <p id="user-account-name"> </p>
+                                    <p>@loggedUserName</p>
+                                    <p><small>@loggeduserDesignation</small></p>
+                                </li>
+                                <!-- Menu Body -->
+                                @*<li class="user-body">
+                                      <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                          <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                          <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                          <a href="#">Friends</a>
+                                        </div>
+                                      </div>
+                                    </li>*@
+                                <!-- Menu Footer-->
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <button id="user_profile_model" class="btn btn-default btn-flat">Profile</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="@Url.Action("Signout", "Home")" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar" style="border-top-style: solid;border-top-width: thin;  border-top-color:#ffcb08">
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree" id="sidebar_pagaaction">
+
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-tachometer"></i><span>View Dashboard<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-bed"></i><span>Room Resevation<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-building-o"></i><span>Hall Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-cutlery"></i><span>Kitchen/ Restuarent<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-beer"></i><span>Bar / Cashier<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-user-o"></i><span>Employee Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+
+
+
+                    <!-- Optionally, you can add icons to the links -->
+                    @*@{
+                            if (loggedUserRole == "Reception" || loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "Marketing" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserName == "Erin Gomez")
+                            {
+                                <li class="treeview">
+
+                                    <a href="#">
+                                        <i class="fa fa-plus-square"></i> <span>Add Students</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+
+                                    <ul class="treeview-menu">
+                                        @{
+                                            if (loggedUserRole == "Reception" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                                            {
+                                                <li style="margin-left:10px;"><a href="@Url.Action("EnquiryFormCall", "Student")"><i class="fa fa-plus"></i><span>Enquiry Form (Info-call)</span></a></li>
+
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Reception" || loggedUserRole == "Counselor" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                                            {
+                                                <li style="margin-left:10px;"><a href="@Url.Action("EnquiryFormWalk", "Student")"><i class="fa fa-plus"></i><span>Enquiry Form</span></a></li>
+
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "Marketing" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                                            {
+                                                <li style="margin-left:10px;"><a href="@Url.Action("Upload_Bulk", "Student")"><i class="fa fa-plus"></i>Bulk Upload</a></li>
+
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Marketing" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserName == "Erin Gomez")
+                                            {
+                                                <li style="margin-left:10px;"><a href="@Url.Action("SpecialEnquiryForm", "Student")"><i class="fa fa-plus"></i><span>Enquiry Form (Special)</span></a></li>
+
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "ITAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "FinanceManager")
+                            {
+                                <li><a href="@Url.Action("Dashboard", "Student")"><i class="fa fa-tachometer"></i><span>View Dashboard<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li><a href="@Url.Action("LeadSet", "Student")"><i class="fa fa-edit"></i><span>My Lead Set</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "ITAdmin" || loggedUserRole == "Admin" || loggedUserRole == "FinanceManager" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li><a href="@Url.Action("SearchStudent", "Student")"><i class="fa fa-search"></i><span>Search Student</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "CallCenter" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li><a href="@Url.Action("BulkAllocated", "Student")"><i class="fa fa-list-ul"></i><span>Bulk Allocated<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "FinanceManager" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "Manager")
+                            {
+                                <li><a href="@Url.Action("BulkSummary", "Student")"><i class="fa fa-list-alt"></i><span>Bulk Summary</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "FinanceManager")
+                            {
+                                <li><a href="@Url.Action("MarketingProgress", "Student")"><i class="fa fa-circle-o-notch"></i><span>Marketing Review</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "FinanceManager" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li><a href="@Url.Action("CallCenterProgress", "Student")"><i class="fa fa-phone-square"></i><span>Call Center Progress</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "FinanceManager" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "CallCenter")
+                            {
+                                <li><a href="@Url.Action("CallCenterReview", "Student")"><i class="fa fa-volume-control-phone"></i><span>Call Center Review</span></a></li>
+
+                            }
+                        }
+                        @{
+                            if (loggedUserRole == "Finance" || loggedUserRole == "ITAdmin" || loggedUserRole == "Admin" || loggedUserRole == "FinanceManager" || loggedUserRole == "OperationalAdmin")
+                            {
+                                <li><a href="@Url.Action("FinanceAccess", "Student")"><i class="fa fa-check-square-o"></i><span>Finance Access</span></a></li>
+
+                            }
+                        }
+
+
+                        @{
+                            if (loggedUserRole == "Manager" || loggedUserRole == "ITAdmin" || loggedUserRole == "Admin" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "FinanceManager")
+                            {
+
+
+                                <li class="treeview">
+
+                                    <a href="#">
+                                        <i class="fa fa-user-circle"></i> <span>Manager Access</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+
+                                    <ul class="treeview-menu">
+
+                                        <li style="margin-left:10px;"><a href="@Url.Action("ManageCounselor", "Student")"><i class="fa fa-users"></i><span>Manage Counselors</span></a></li>
+
+                                        <li style="margin-left:10px;"><a href="@Url.Action("StatusSelection", "Student")"><i class="fa fa-wrench"></i><span>Status Selection</span></a></li>
+                                        <li style="margin-left:10px;"><a href="@Url.Action("NotProspectiveList", "Student")"><i class="fa fa-wrench"></i><span>Not Prospective List</span></a></li>
+
+                                        <li style="margin-left:10px;"><a href="@Url.Action("DublicateHandle", "Student")"><i class="fa fa-files-o"></i>Dublicate Handle</a></li>
+
+                                    </ul>
+                                </li>
+
+
+                                <li><a href="@Url.Action("SMSPage", "Student")"><i class="fa fa-comment"></i><span>SMS</span></a></li>
+                                <li><a href="@Url.Action("EmailPage", "Student")"><i class="fa fa-envelope"></i><span>E-mail</span></a></li>
+
+                            }
+                        }
+
+
+                        @{
+                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "FinanceManager" || loggedUserName == "Samadhi Paranawithana" || loggedUserName == "Terrence Philip")
+                            {
+
+
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-file"></i> <span>Reports</span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        @{
+                                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "FinanceManager" || loggedUserName == "Samadhi Paranawithana" || loggedUserName == "Terrence Philip")
+                                            {
+                                                <li style="margin-left:10px;">
+                                                    <a href="@Url.Action("BasicReport", "Reports")">
+                                                        <i class="fa fa-file"></i>Basic Reports
+                                                        <span class="pull-right-container badge bg-white">
+                                                            New
+                                                        </span>
+                                                    </a>
+
+                                                </li>
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
+                                            {
+
+
+                                                <li style="margin-left:10px;"><a href="@Url.Action("InquiryReports", "Reports")"><i class="fa fa-file"></i>Inquiry Reports</a></li>
+                                                <li style="margin-left:10px;"><a href="@Url.Action("AgentInquiryReports", "Reports")"><i class="fa fa-file"></i>Agent Inquiries </a></li>
+                                                <li style="margin-left:10px;"><a href="@Url.Action("RefferalPartnerInquiryReports", "Reports")"><i class="fa fa-file"></i>Referral Partners </a></li>
+                                                <li style="margin-left:10px;"><a href="@Url.Action("DatabaseFollowUpsReports", "Reports")"><i class="fa fa-file"></i>Database Follow ups</a></li>
+                                                <li style="margin-left:10px;"><a href="@Url.Action("FullReports", "Reports")"><i class="fa fa-file"></i>Full Report</a></li>
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "FinanceManager")
+                                            {
+
+                                                <li style="margin-left:10px;"><a href="@Url.Action("MarketingModeReports", "Reports")"><i class="fa fa-file"></i>Marketing Report</a></li>
+                                            }
+                                        }
+                                        @{
+                                            if (loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin" || loggedUserRole == "Marketing" || loggedUserRole == "FinanceManager" || loggedUserName == "Samadhi Paranawithana" || loggedUserName == "Terrence Philip")
+                                            {
+                                                <li style="margin-left:10px;">
+                                                    <a href="@Url.Action("MarketingModeReportsNew", "Reports")">
+                                                        <i class="fa fa-file"></i>Marketing Report
+                                                        <span class="pull-right-container badge bg-white">
+                                                            New
+                                                        </span>
+                                                    </a>
+
+                                                </li>
+                                            }
+                                        }
+
+                                    </ul>
+                                </li>
+                            }
+                        }*@
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header"></section>
+            <!-- Main content -->
+            <section class="content container-fluid">
+
+                <!-- Renderbody -->
+                @RenderBody()
+            </section>
+
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer" style="font-size:11px; padding: 5px;">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                Version 1.0
+            </div>
+            <!-- Default to the left -->
+
+        </footer>
+
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+        immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+
+    <div id="ProfileModel" class="modal">
+
+        <div class="modal-content" style="border-radius: 10px;width:30%; margin:auto;margin-top:10vh;max-height:70vh;overflow-x:auto ">
+            @*<div class="row" style="background-color: royalblue; color: white; border-radius: 6px; padding:10px;margin-bottom: 2rem;">
+                    <h4 class="col-sm-11" style="">
+                        Create Task
+                    </h4>
+                    <i class="close fa fa-window-close col-sm-1"></i>
+                </div>*@
+
+            <div class="panel panel-default" style="border-top-width:thick;border-top-color:#ffcb08">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Profile</h3>
+                    <i class="close fa fa-window-close col-sm-1" style="margin-top: -15px;" id="profile_close"></i>
+                </div>
+                <form role="form">
+                    <div class="panel-body">
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="~/AdminLTE/components/adminLTE/img/avatar5.png"
+                                         alt="User profile picture">
+                                </div>
+
+                                <h3 class="profile-username text-center">@loggedUserName</h3>
+
+                                <p class="text-muted text-center">@loggeduserDesignation</p>
+
+                                @*<ul class="list-group list-group-unbordered mb-auto">
+                                        <li class="list-group-item">
+                                            <b>Personal Target</b> <a class="float-right">@loggeduserTarget</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Following</b> <a class="float-right">543</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Friends</b> <a class="float-right">13,287</a>
+                                        </li>
+                                    </ul>*@
+
+
+
+                                <div class="pull-right" id="profile_activeToggle_div">
+
+                                </div>
+                                @*<a href="#" class="btn btn-default btn-block" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red"><b>Submit</b></a>*@
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        @*<button type="submit" id="dashboard_sumbit_button" class="btn btn-default col-md-offset-10" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="interaction_lead_model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:90%; margin:auto;margin-top:10vh;max-height:80vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Customer Interaction</h3>
+                    <i class="close fa fa-lg fa-window-close" id="interaction_lead_model_close" style="margin-top: -15px; opacity: 1"></i>
+                </div>
+                @*<form role="form">*@
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                            <div class="products-list">
+                                <div class="item">
+                                    <div class="product-img">
+                                        <img src="~/Images/PageImages/CRM_Customer.jpg" alt="">
+
+                                    </div>
+                                    <div class="product-info">
+                                        <a class="product-title" style="color: #7d4756">
+                                            <span class="pull-right" id="interaction_lead_model_basic_spanduplicateicon"></span>
+                                            <span class="pull-right" id="interaction_lead_model_basic_spanid" style="font-size: small;padding-right: 5px;"></span>
+
+
+                                            <p id="interaction_lead_model_basic_Name"></p>
+
+
+                                        </a>
+                                        <span class="product-description" id="interaction_lead_model_basic_Contactnumber_1">
+
+
+
+                                        </span>
+                                        <span class="product-description" id="interaction_lead_model_basic_Contactnumber_2">
+
+
+                                        </span>
+                                        <span class="product-description" id="interaction_lead_model_basic_Contactnumber_3">
+
+
+                                        </span>
+                                        <span class="product-description" id="interaction_lead_model_basic_Contactnumber_4">
+
+
+                                        </span>
+                                        <span class="product-description" id="interaction_lead_model_basic_Email">
+
+
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="products-list">
+                                    <div class="item">
+                                        <p><b>Counsellor :</b> <span id="interaction_lead_model_basic_Counselorname"> </span></p>
+                                        <p><b>Status :</b> <span id="interaction_lead_model_basic_studentstatus">  </span></p>
+                                        <p><b>Marketing Mode :</b> <span id="interaction_lead_model_basic_marketingmode">  </span></p>
+                                        <p><b>Intake :</b> <span id="interaction_lead_model_basic_intake">  </span></p>
+                                        @*<p><b>Program :</b> <span id="interaction_lead_model_basic_program"> </span></p>*@
+                                        <p><b>Date :</b> <span id="interaction_lead_model_basic_date"> </span></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="info-box bg-gray">
+                                    <span class="info-box-icon"><i class="ion ion-ios-person-outline"></i></span>
+
+                                    <div class="info-box-content">
+
+                                        <div class="col-lg-12">
+                                            <p class="info-box-text">Student Name : <span>Nayon Fonseka</span></p>
+                                            <p class="info-box-text">Contact Numbers : <span>0775269484</span></p>
+
+                                        </div>
+
+                                    </div>
+                                     /.info-box-content
+                                </div>*@
+                            <div class="">
+                                <div class="box col-md-12" style="border: solid; border-width: thin; border-color: #143F6B; margin-top: 10px;padding-left:5px;padding-right:5px ">
+                                    <div class="box-header" style="border-bottom: solid;border-bottom-width: thin;padding-bottom: 20px;">
+                                        <h3 class="box-title" style="font-size: 14px !important;"><i class="fa fa-calendar" aria-hidden="true"></i> Current month appoinments</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <table class="display" id="CRM_CURRENT_MONTH_APPOINTMENTS_TABLE" style="width: 100%; ">
+                                            <thead>
+                                                <tr>
+                                                    <th style="font-weight: normal;">Date</th>
+                                                    <th style="font-weight: normal;">Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <div class="col-lg-12" style="display:none;border: solid; border-width: thin; border-color: #7d4756;margin-top: 10px;" id="Appointment_Unique_update_status">
+                                            <div class="box-header" style="border-bottom: solid; border-bottom-width: thin; margin-bottom: 10px; ">
+                                                <h3 class="box-title" style="font-size: 14px !important;" id="Appointment_Unique_update_status_time"><i class="fa fa-clock-o" aria-hidden="true"></i> Feb 29 2024 8:24AM</h3>
+                                            </div>
+                                            <input type="text" hidden="" id="Appointment_Div_ID">
+                                            <input type="text" hidden="" id="Appointment_Div_Lead_ID">
+                                            <div class="form-group col-md-12" style="margin-left:0px;">
+
+
+                                                <label class="" for="exampleInputName" style="text-align:left;width:100%">Appoinment Status</label>
+
+                                                <select name="call_status" id="Appointment_div_appointment_status" class="form-control">
+                                                    <option value="">-select-</option>
+
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group col-md-12" style="margin-left:0px;">
+
+
+                                                <label class="" for="exampleInputName" style="text-align:left;width:100%">Remark</label>
+                                                <input type="text" class="form-control" id="Appointment_div_appointment_Remark">
+
+                                            </div>
+                                            <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+
+                                                <button class="btn btn-default" style="border-color:#ffcb08;float:right;color: #7d4756" id="Appointment_div_appointment_update_button"> <i class="fa fa-pencil-square-o"></i> Update appointment</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-lg-6">
+                            <div class="form-group col-md-7" style="margin-left:0px;">
+
+                                <input type="text" hidden id="interaction_model_interaction_lead_id" />
+                                <label class="" for="exampleInputName" style="text-align:left;width:100%">Interaction Status</label>
+
+                                <select name="call_status" id="interaction_model_interaction_status" class="form-control"></select>
+
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputContact">Interaction Remark</label>
+                                <input type="text" class="form-control" id="interaction_model_interaction_remark" placeholder="Enter interaction remark">
+                            </div>
+                            <div class="form-group col-md-6" id="div_interaction_model_interaction_status" style="display:none">
+                                <label for="exampleInputContact">Student Status</label>
+                                <select name="" id="interaction_model_student_status_according_to_interaction_status" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-7" style="display:none" id="div_interaction_model_next_reminder">
+                                <label for="exampleInputProgram">Next Sheduled Time</label>
+                                <input type="text" readonly class="form-control" id="interaction_model_interaction_next_reminder" value="" placeholder="">
+                            </div>
+                            <div class="form-group col-md-7" style="display:none" id="div_interaction_model_appointment">
+                                <div class="col-md-7" style=" padding-left: 0px !important;">
+                                    <label for="exampleInputProgram">Appointment date</label>
+                                    <input type="text" readonly class="form-control" id="interaction_model_interaction_appointment_date" value="" placeholder="">
+                                </div>
+                                <div class="col-md-5" style=" padding-right: 0px !important;">
+                                    <button type="button" id="interaction_model_interaction_Clear_appointment" class="btn btn-default" style="margin-bottom:5px;border-color:black;color:black"><i class="fa  fa-times-circle-o"></i> Clear Appoinment</button>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-12" id="div_interaction_model_interaction_notprospective_reason" style="display:none">
+                                <label for="exampleInputProgram">Not Prospective Reason</label>
+                                <input type="text" class="form-control" id="interaction_model_interaction_not_prospective_reason" placeholder="">
+                            </div>
+                            <div class="col-md-12" style="display:none" id="div_interaction_model_interaction_R_Parameters">
+
+                                <div class="form-group col-md-3" id="div_interaction_model_interaction_R_Title">
+                                    <label for=""> Title</label>
+                                    <select name="" id="interaction_model_interaction_R_Title" class="form-control">
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-9" id="div_interaction_model_interaction_R_Given_Name">
+                                    <label for=""> Given name</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_Given_Name" placeholder="Student given name">
+                                </div>
+                                <div class="form-group col-md-12" id="div_interaction_model_interaction_R_Surname">
+                                    <label for=""> Surname</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_Surname" placeholder="Student surname">
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_ContactNumber_1">
+                                    <label for="">Student contact number</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_ContactNumber_1" placeholder="Student contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58)||(event.keyCode==107))" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_ContactNumber_2">
+                                    <label for="">Second contact number</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_ContactNumber_2" placeholder="Second contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58)|| (event.keyCode==107))" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_GardianContactNumber">
+                                    <label for="">Gardian contact number</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_GardianContactNumber" placeholder="Gardian contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58) || (event.keyCode==107))" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-12" id="div_interaction_model_interaction_R_Email">
+                                    <label for="">E-mail</label>
+                                    <input type="text" class="form-control" id="interaction_model_interaction_R_Email" placeholder="Student e-mail">
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_Pathway_New">
+                                    <label for="exampleInputProgram"> Registered pathway</label>
+                                    <select name="" id="interaction_model_interaction_R_Pathway_New" class="form-control"></select>
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_University_New">
+                                    <label for="exampleInputProgram"> Registered university</label>
+                                    <select name="" id="interaction_model_interaction_R_University_New" class="form-control">
+                                        <option value="">-select pathway-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_Program_New">
+                                    <label for="exampleInputProgram"> Registered program</label>
+                                    <select name="" id="interaction_model_interaction_R_Program_New" class="form-control">
+                                        <option value="">-select university-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6" id="div_interaction_model_interaction_R_Intake_New">
+                                    <label for="exampleInputProgram">Registered intake</label>
+                                    <select name="" id="interaction_model_interaction_R_Intake_New" class="form-control">
+                                        <option value="">-select university-</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12" id="div_Regitered_Intake_Swinburne" style="display:none">
+                                    <div class="form-group col-md-8" id="div_interaction_model_interaction_R_SubStream">
+                                        <label for="exampleInputProgram">Sub Stream</label>
+                                        <select name="" id="interaction_model_interaction_R_SubStream" class="form-control">
+                                            <option value="">-select stream-</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="div_Regitered_Intake_USA" style="display:none">
+                                    <div class="form-group col-md-6" id="div_interaction_model_interaction_R_Credit_Count">
+                                        <label for="exampleInputProgram">Credit</label>
+                                        <select name="" id="interaction_model_interaction_R_Credit_Count" class="form-control">
+                                            <option value="">-select credit count-</option>
+                                            <option value="1">30 Credit</option>
+                                            <option value="2">45 Credit</option>
+                                            <option value="3">60 Credit</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6" id="div_interaction_model_interaction_R_Major">
+                                        <label for="exampleInputProgram">Major</label>
+                                        <input type="text" class="form-control" id="interaction_model_interaction_R_Major" placeholder="">
+                                    </div>
+                                </div>
+
+                                @*<div class="col-md-12">
+
+                                    </div>
+                                    <div class="col-md-12">
+
+                                    </div>*@
+                                <div class="form-group col-md-7" id="div_interaction_model_interaction_R_Study_Location">
+                                    <label for="exampleInputProgram">Study Location</label>
+                                    <select name="" id="interaction_model_interaction_R_Study_Location" class="form-control">
+                                        <option value="">-select location-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-7" id="div_interaction_model_interaction_R_English">
+                                    <label for="exampleInputProgram">English requirement</label>
+                                    <select name="" id="interaction_model_interaction_R_English" class="form-control">
+                                        <option value="">-select -</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6" id="div_interaction_model_interaction_future_intake" style="display:none">
+                                <label for="exampleInputProgram"> Intake</label>
+                                <select name="" id="interaction_model_interaction_intake" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-6" id="div_interaction_model_interaction_forwarding_pathway" style="display:none">
+                                <label for="exampleInputProgram">Forwarding Pathway</label>
+                                <select name="" id="interaction_model_interaction_forwarding_pathway" class="form-control"></select>
+                            </div>
+                            <div class="form-group col-md-6" id="div_interaction_model_interaction_forwarding_branch" style="display:none">
+                                <label for="exampleInputProgram">Forwarding Branch</label>
+                                <select name="" id="interaction_model_interaction_forwarding_branch" class="form-control"></select>
+                            </div>
+                            <div class="form-group ">
+
+                                <div class="col-lg-8 has-error text-right">
+                                    <label class="control-label " for="inputError" id="validation_error_interaction">
+
+                                    </label>
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <button type="submit" id="interaction_model_interaction_sumbit_button" class="btn btn-default" style="margin-bottom:5px; background-color:#7d4756;border-color:black;color:white"><i class="fa  fa-check-square-o"></i> Submit interaction</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2  col-lg-2">
+                            <div class="small-box bg-gray" style="border: solid; border-radius: 10px;border-color:#ffcb08;border-width: thin; color:#ffcb08 !important">
+                                <div class="inner">
+                                    <h1>  <i class="fa fa-lg fa-user-o"></i></h1>
+
+
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </div>
+                                <a href="#" class="small-box-footer" id="view_history_model_button_click">View History <i class="fa fa-eye"></i></a>
+                                <a href="#" class="small-box-footer" id="view_details_model_button_click">Enquiry Form <i class="fa fa-file"></i></a>
+                                <a href="#" class="small-box-footer" id="special_details_model_button_click">View Details <i class="fa fa-eye"></i></a>
+                                <a href="#" class="small-box-footer" id="add_details_model_button_click">Add Details <i class="fa fa-plus"></i></a>
+                            </div>
+                            <label class="control-label" for="inputError" id="submit_added_details_hold_msg" style="color:#dd4b39;font-weight:400;font-size:12px;display:none">
+                                Added details are not submited until intereraction is submitted.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                @*<div class="card-footer">
+                        <button type="submit" id="notification_sumbit_button" class="btn btn-default col-md-offset-10" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>
+                    </div>*@
+                @*</form>*@
+            </div>
+        </div>
+    </div>
+
+    <div id="update_lead_details_Modal" class="modal">
+
+        <div class="modal-content" style="border-radius: 10px;width:85%; margin:auto;margin-top:10vh;max-height:85vh;overflow-x:auto ">
+            @*<div class="row" style="background-color: royalblue; color: white; border-radius: 6px; padding:10px;margin-bottom: 2rem;">
+                    <h4 class="col-sm-11" style="">
+                        Create Task
+                    </h4>
+                    <i class="close fa fa-window-close col-sm-1"></i>
+                </div>*@
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Lead Data</h3>
+                    @*<i class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;" id="add_details_model_button_close"></i>*@
+                    <i class="close fa fa-lg fa-window-close" id="add_details_model_button_close" style="margin-top: -15px; opacity: 1"></i>
+                </div>
+                <form role="form">
+                    <div class="panel-body">
+                        @*<div class="form-group col-md-7" style="margin-left:0px;">
+                                <label class="" for="exampleInputName" style="text-align:left;width:100%">Name</label>
+                                <div class="col-sm-3 col-xs-6">
+                                    <select name="cars" id="model_id_title" class="form-control">
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mrs.">Mrs.</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-9 col-xs-12">
+                                    <input type="text" style="display:none" class="form-control" id="model_id_user" placeholder="Enter Name">
+                                    <input type="text" style="display:none" class="form-control" id="model_id_counselor" placeholder="Enter Name">
+                                    <input type="text" class="form-control readonly" id="update_lead_model_update_name" placeholder="Enter Name" value="Nayon Fonseka" readonly>
+                                </div>
+
+                            </div>*@
+                        <div class="form-group col-md-2 col-sm-3 col-xs-5">
+                            <label for="exampleInputContact">Title</label>
+                            <select name="cars" id="update_lead_model_update_title" class="form-control">
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Ms">Ms</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-10 col-sm-9 col-xs-12">
+                            <label for="exampleInputContact">Name</label>
+                            <input type="text" style="display:none" class="form-control" id="model_id_user" placeholder="Enter Name">
+                            <input type="text" style="display:none" class="form-control" id="model_id_counselor" placeholder="Enter Name">
+                            <input type="text" class="form-control readonly" id="update_lead_model_update_name" placeholder="Enter Name" readonly>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-8 col-xs-12">
+                            <label for="exampleInputContact">Contact Number</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Contactnumber" placeholder="Contact Number" disabled>
+                        </div>
+
+
+                        <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                            <label for="sd_contact">Optional Contact Number</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Contactnumber2" placeholder="Optional contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58))" autocomplete="off">
+
+                        </div>
+                        <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                            <label for="sd_contact">Optional Contact Number</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Contactnumber3" placeholder="Optional contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58))" autocomplete="off">
+
+                        </div>
+                        <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                            <label for="sd_contact">Optional Contact Number</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Contactnumber4" placeholder="Optional contact number" onkeydown="return((95<event.keyCode && event.keyCode<106)||(event.keyCode==8)||(47<event.keyCode && event.keyCode<58))" autocomplete="off">
+
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                            <label for="exampleInputProgram">E-mail</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Email" placeholder="E-mail">
+                        </div>
+                        <div class="form-group  col-md-4 col-sm-12 col-xs-12">
+                            <label for="exampleInputProgram">Program</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_Program" placeholder="Program">
+                        </div>
+                        <div class="form-group col-md-3 col-sm-8 col-xs-10">
+                            <label for="exampleInputProgram">Date Of Birth</label>
+                            <input type="text" readonly class="form-control" id="update_lead_model_update_dob" placeholder="Date">
+                        </div>
+
+                        @*<div class="form-group  col-md-3 col-sm-8 col-xs-10">
+                                <label for="exampleInputProgram">Intended Pathways</label>
+                                <select name="" id="update_lead_model_update_pathway" class="form-control" disabled></select>
+
+                            </div>*@
+                        @*<div class="form-group col-md-6">
+                                <label for="exampleInputProgram" class="col-md-12">Intended Commencement Year & Semester</label>
+                                <div class="col-md-6">
+                                    <select name="" id="model_user_Year" class="form-control">
+                                        <option value="">-select-</option>
+                                        <option value="@(DateTime.Now.Year)"> @DateTime.Now.Year</option>
+                                        <option value="@(DateTime.Now.Year+1)"> @(DateTime.Now.Year + 1)</option>
+                                        <option value="@(DateTime.Now.Year+2)">@(DateTime.Now.Year + 2)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="" id="model_user_sem" class="form-control">
+                                        <option value="">-select-</option>
+                                        <option value="JAN">JAN</option>
+                                        <option value="JUL">JULY</option>
+                                        <option value="OCT">OCTOBER</option>
+                                    </select>
+                                </div>
+                            </div>*@
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                            <label for="exampleInputProgram">Address</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_address" placeholder="Input Address">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-8 col-xs-12">
+                            <label for="exampleInputProgram">Secondary School / Organisation</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_school" placeholder="Input School / Organization">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-8 col-xs-12">
+                            <label for="exampleInputProgram">Identification Number</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_identification" placeholder="Identification Number">
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputProgram">What best describes about you</label>
+                                <div class="col-sm-12" id="student_best_qualification">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio_wbdu" value="AdvancedLevel" id="AdvancedLevel">A/L
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio_wbdu" value="OrdinaryLevel" id="OrdinaryLevel">O/L
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio_wbdu" value="UniversityStudent" id="UniversityStudent">University Student
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio_wbdu" value="FoundationLevel" id="FoundationLevel">Foundation Level
+                                    </label>
+
+                                </div>
+                                <div class="" @*style="display:none"*@ id="div_sylabus_type">
+                                    <label for="sd_ew_sylabustype">Sylabus Type</label>
+                                    <div class="col-sm-12">
+                                        <label class="radio-inline">
+
+                                            <input type="radio" name="sd_ew_sylabustype" value="London" id="London">London
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="sd_ew_sylabustype" value="Local" id="Local">Local
+                                        </label>
+                                    </div>
+                                </div>
+                                <div id="ol_result" @*style="display:none; "*@>
+                                    <label for="sd_ew_sylabustype">O/L Results</label>
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> A </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_a" placeholder="#">
+                                            </div>
+                                            @*<label for="exampleInputProgram">A</label>
+                                                <input type="number" class="form-control" id="model_user_ol_a" placeholder="">*@
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> B </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_b" placeholder="#">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> C </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_c" placeholder="#">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> D </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_d" placeholder="#">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> S </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_s" placeholder="#">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> W </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_f" placeholder="#">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-sm-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> English </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update_ol_english" placeholder="Result">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="al_result" @*style="display:none; "*@>
+                                    <label for="sd_ew_sylabustype">A/L Results</label>
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Subject </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_s1" placeholder="Enter A/L subject 1">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Grade </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_r1" placeholder="Result">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Subject </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_s2" placeholder="Enter A/L subject 2">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Grade </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_r2" placeholder="Result">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Subject </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_s3" placeholder="Enter A/L subject 3">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Grade </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_r3" placeholder="Result">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Subject </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_s4" placeholder="Enter A/L subject 4">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> Grade </span>
+                                                <input type="text" class="form-control" id="update_lead_model_update__al_r4" placeholder="Result">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @*<input type="text" class="form-control" id="exampleInputProgram" placeholder="Input School / Organization">*@
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group col-md-4 col-sm-8 col-xs-12">
+                            <div style="width:50%">
+                                <div style="width:100%">
+                                    <label for="exampleInputProgram">Source of Funds</label>
+                                    <select name="" id="update_lead_model_update_sof" class="form-control">
+                                        @*<option value="Parents">Parents</option>
+                                            <option value="SelfFinance">Self Finance</option>
+                                            <option value="Other">Other</option>*@
+                                    </select>
+                                    @*<div class="form-group">
+                                            <a class="btn btn-default" id="addbutton">Add Sponsor Details</a>
+                                        </div>*@
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12" id="add_div">
+                            <label for="exampleInputProgram row">Sponsor Details</label>
+                            <div class="col-sm-12">
+                                <a class="btn btn-default pull-right" style=" border-color:#ffcb08;color:black" id="update_model_add_sponsor_btn"><i class="fa fa-plus"></i> Add sponsor</a>
+                            </div>
+                            <div class="col-sm-12">
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="">
+
+                                    <div class="form-group col-md-6 col-sm-12" style="display:none" id="update_lead_model_update_sponsorn_div1">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorid1" placeholder="" style="display:none">
+                                            <span class="input-group-addon"> Name </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorname1" placeholder="Sponsor Name">
+
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Relationship </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorrelationship1" placeholder="Enter Relationship">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Occupation </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsoroccupation1" placeholder="Enter Occupation">
+
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Contact number </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorcontactnumber1" placeholder="Enter Contact Number">
+                                        </div>
+                                        <div class="col-lg-12 has-error text-right">
+                                            <label class="control-label " for="inputError" id="validation_error_sponsor_details_1" style="font-weight:400;font-size:12px;">
+
+                                            </label>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-default pull-right" id="update_lead_model_update_savebutton1">Save sponsor details</button>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-12" style="display:none" id="update_lead_model_update_sponsorn_div2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorid2" placeholder="" style="display:none">
+                                            <span class="input-group-addon"> Name </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorname2" placeholder="Sponsor Name">
+
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Relationship </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorrelationship2" placeholder="Enter Relationship">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Occupation </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsoroccupation2" placeholder="Enter Occupation">
+
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> Contact number </span>
+                                            <input type="text" class="form-control" id="update_lead_model_update_sponsorcontactnumber2" placeholder="Enter Contact Number">
+                                        </div>
+                                        <div class="col-lg-12 has-error text-right">
+                                            <label class="control-label " for="inputError" id="validation_error_sponsor_details_2" style="font-weight:400;font-size:12px;">
+
+                                            </label>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-default pull-right" id="update_lead_model_update_savebutton2">Save sponsor details</button>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="student_sposor_detalis_name_1" style="font-weight:400"></label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="student_sposor_detalis_name_2" style="font-weight:400"></label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label id="student_sposor_detalis_more_details_error" style="font-weight:400;color:#ffcb08"></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                            <label for="exampleInputProgram">Remark</label>
+                            <input type="text" class="form-control" id="update_lead_model_update_remark" placeholder="Enter Remark">
+                        </div>
+
+
+
+
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+
+                        </div>
+                        <div class="col-lg-10 has-error text-right">
+                            <label class="control-label " for="inputError" id="validation_error">
+
+                            </label>
+
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="submit" id="update_lead_model_update_btn_submit" class="btn btn-default pull-right" style=" border-color:#ffcb08;color:#7d4756"><i class="fa  fa-check-square-o"></i> Submit details</button>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer" style="padding:10px;">
+                        @*<button type="submit" class="btn btn-default pull-left" style="margin-bottom:5px; border-color:black;color:red" id="model_Reminder_button">Interaction</button>
+                            <button type="submit" class="btn btn-default" style="margin-bottom:5px;margin-left:5px; border-color:black;color:red" id="model_forward_button">Forward</button>*@
+                        @*<button type="submit" id="model_sumbit_button" class="btn btn-default pull-right" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>*@
+                        @*<button type="submit" class="btn btn-default" style="margin-bottom:5px; border-color:black;color:red">Clear</button>*@
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="view_lead_details_model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:80%; margin:auto;margin-top:10vh;max-height:80vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#ffcb08">
+                <div class="panel-heading">
+
+                    <h3 class="panel-title ">Student Details </h3>
+
+                    <i class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;" id="view_details_model_button_close"></i>
+                </div>
+                @*<div class="container">
+                        <button type="button" class=" btn btn-primary " id="generate_pdf">
+                            <i class="fa fa-download"></i> Generate PDF
+                        </button>
+                    </div>*@
+
+                <div class="panel-body m-3" style="border:solid; border-color:grey;border-width:thin;margin:10px;" id="pdf_body">
+                    <div class="form-group col-md-12">
+
+                    </div>
+                    <div class="">
+                        <div class="col-xl-10 col-lg-9 col-md-9 col-sm-9">
+                            <h1 style="    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                                Enquiry form
+                            </h1>
+                        </div>
+
+                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3">
+                            <img src="~/Images/NCHS Logo Enquiry.png" alt="Product Image" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+
+                    </div>
+                    <div class="form-group col-md-4">
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <p><b>Date :</b> <span id="view_lead_model_view_date"></span></p>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <p><b>Counsellor :</b> <span id="view_lead_model_view_Counselor"> </span></p>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <h4 style="    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                            <b>
+                                Personal Information
+                            </b>
+
+                        </h4>
+                    </div>
+                    <div style="padding-left:15px;">
+                        <div class="form-group col-md-4">
+                            <p><b>Title :</b> <span id="view_lead_model_view_title"> </span></p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <p><b>Date of Birth :</b> <span id="view_lead_model_view_dob"></span></p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p><b>Name :</b> <span id="view_lead_model_view_Name"> </span></p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p><b>Email :</b> <span id="view_lead_model_view_Email"> </span></p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <p><b>Contact number :</b> <span id="view_lead_model_view_Contactnumber_1"> </span></p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <p><b>Other Contact number :</b> <span id="view_lead_model_view_Contactnumber_2"> </span></p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p><b>Address :</b> <span id="view_lead_model_view_Address"> </span></p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p><b>School :</b> <span id="view_lead_model_view_School"> </span></p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p><b>Identification number (if any) :</b> <span id="view_lead_model_view_Identificationnumber"> </span></p>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <p><b>What best describes about student  :</b> <span id="view_lead_model_view_bestdesc"> </span></p>
+
+                        </div>
+                        <div class="form-group col-xs-2">
+
+                        </div>
+                        <div class="form-group col-xs-10">
+                            <p>O/L Results : A - <span id="view_lead_model_view_ol_a"> 1 , </span> B - <span id="view_lead_model_view_ol_b">   </span>  C - <span id="view_lead_model_view_ol_c">  </span> D - <span id="view_lead_model_view_ol_d">  </span> S - <span id="view_lead_model_view_ol_s"> , </span>  F - <span id="view_lead_model_view_ol_w">  </span></p>
+                            <p>A/L Results : <span id="view_lead_model_view_al_s1"> Subject 1 - </span> <span id="view_lead_model_view_al_r1"> S , </span><span id="view_lead_model_view_al_s2"> Subject 2 - </span> <span id="view_lead_model_view_al_r2"> S , </span><span id="view_lead_model_view_al_s3"> Subject 3 - </span> <span id="view_lead_model_view_al_r3"> S , </span><span id="view_lead_model_view_al_s4"> Subject 4 - </span> <span id="view_lead_model_view_al_r4"> S </span></p>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <p><b>Study area  :</b> <span id="view_lead_model_view_program"> </span></p>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <p><b>Intended Pathway  :</b> <span id="view_lead_model_view_pathway"> </span></p>
+                    </div>
+                    <div class="form-group col-sm-8">
+                        <p><b>Intended commencement year / semester  :</b> <span id="view_lead_model_view_Intake"> </span></p>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <p><b>Source of Funds :</b> <span id="view_lead_model_view_Sponsers">  </span></p>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <p><b>Sponsor details (if any) :</b> <span>  </span></p>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group col-sm-6">
+                            <p>Name : <span id="view_lead_model_view_Sponsers1_name"></span></p>
+                            <p>Relationship : <span id="view_lead_model_view_Sponsers1_relationship"></span></p>
+                            <p>Occupation : <span id="view_lead_model_view_Sponsers1_occupation"></span></p>
+                            <p>Phone number : <span id="view_lead_model_view_Sponsers1_phonenumber"></span></p>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <p>Name : <span id="view_lead_model_view_Sponsers2_name"></span></p>
+                            <p>Relationship : <span id="view_lead_model_view_Sponsers2_relationship"></span></p>
+                            <p>Occupation : <span id="view_lead_model_view_Sponsers2_occupation"></span></p>
+                            <p>Phone number : <span id="view_lead_model_view_Sponsers2_phonenumber"></span></p>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <p><b>Questions/Comments :</b> <span id="view_lead_model_view_Remark">  </span></p>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <p><b>Marketing Mode:</b> <span id="view_lead_model_view_marketingmode">  </span> <span id="view_lead_model_view_marketingmode_subname">  </span></p>
+
+                    </div>
+                    <div class="form-group col-sm-12" style="background-color:#ffcb08">
+                        <p><b></b> <span>  </span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="view_lead_history_model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:60%; margin:auto;margin-top:15vh;max-height:80vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Student Interaction History</h3>
+                    @*<i id="view_lead_history_model_close" class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;"></i>*@
+                    <i class="close fa fa-lg fa-window-close" id="view_lead_history_model_close" style="margin-top: -15px; opacity: 1"></i>
+                </div>
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body" style="padding:10px;">
+                        <table class="display" id="Leadtablehistorymodel_Table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Old Status</th>
+                                    <th>New Status</th>
+                                    <th>Remark</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add_Sponsor_Model" class="modal">
+
+        <div class="modal-content" style="border-radius: 10px;width:40%; margin:auto;margin-top:10vh;max-height:80vh;overflow-x:auto ">
+
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#ffcb08">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Add sponsor</h3>
+                    <i id="add_Sponsor_Model_close" class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;"></i>
+                </div>
+                <div class="col-lg-12">
+
+                </div>
+                <div class="panel-body">
+                    <div class="form-group col-md-12" id="sd_ew_sof_add_sd_div1">
+                        <div class="input-group">
+                            <span class="input-group-addon"> Name </span>
+                            <input type="text" class="form-control" id="addsponser_lead_model__sponsorname" placeholder="Enter Name">
+
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"> Relationship </span>
+                            <input type="text" class="form-control" id="addsponser_lead_model__sponsorrelationship" placeholder="Enter Relationship">
+
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"> Occupation </span>
+                            <input type="text" class="form-control" id="addsponser_lead_model__sponsoroccupation" placeholder="Enter Occupation">
+
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"> Phone Number </span>
+                            <input type="text" class="form-control" id="addsponser_lead_model__sponsorcontact" placeholder="Enter Contact number">
+
+                        </div>
+
+                        <button type="submit" class="btn btn-default pull-right" id="sponsordetails_insert_sponsor_model">Add sponsor details</button>
+                    </div>
+                    <div class="col-lg-12 has-error text-right">
+                        <label class="control-label " for="inputError" id="validation_error_sponsor_details" style="font-weight:400;font-size:12px;">
+
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="interaction_success_submitted_model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:40%; margin:auto;margin-top:15vh;max-height:80vh;overflow-x:auto ">
+
+
+            <!-- /.card-header -->
+            <div class="card-body" style="">
+                <div class="alert alert-success alert-dismissible" style="margin:0px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon fa fa-close" id="interaction_success_submitted_model_close"></i> </button>
+                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                    Interaction Submitted.
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+
+        </div>
+    </div>
+
+    <div id="view_special_for_all_lead_model" class="modal" style="display:none">
+        <div class="modal-content" style="border-radius: 10px;width:80%; margin:auto;margin-top:10vh;max-height:80vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Detailed View</h3>
+                    <i class="close fa fa-lg fa-window-close" id="view_special_for_all_lead_model_close" style="margin-top: -15px;opacity:1"></i>
+                </div>
+                <form role="form">
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="col-md-8 col-lg-8">
+                                <div class="products-list">
+                                    <div class="item">
+                                        <div class="product-img">
+                                            <img src="~/Images/PageImages/CRM_Customer.jpg" alt="">
+
+                                        </div>
+                                        <div class="product-info" style="margin-bottom:10px !important">
+                                            <a class="product-title" style="color: #7d4756">
+                                                <span class="pull-right" id="view_special_for_all_lead_model_spanduplicateicon"></span>
+                                                <span class="pull-right" id="view_special_for_all_lead_model_basic_spanid" style="font-size: small;padding-right: 5px;"></span>
+                                                <input type="text" hidden id="view_special_for_all_lead_model_lead_id" />
+                                                <p id="view_special_for_all_lead_model_basic_Name"></p>
+
+
+                                            </a>
+                                            <span class="product-description" id="view_special_for_all_lead_model_basic_Contactnumber_1">
+
+
+
+                                            </span>
+                                            <span class="product-description" id="view_special_for_all_lead_model_basic_Contactnumber_2">
+
+
+                                            </span>
+                                            <span class="product-description" id="view_special_for_all_lead_model_basic_Contactnumber_3">
+
+
+                                            </span>
+                                            <span class="product-description" id="view_special_for_all_lead_model_basic_Contactnumber_4">
+
+
+                                            </span>
+                                            <span class="product-description" id="view_special_for_all_lead_model_basic_Email">
+
+
+                                            </span>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12" style="margin-top:10px;">
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title ">Interaction History</h5>
+
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="display" id="fullview_Student_results_history" style="font-size: 13px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Old Status</th>
+                                                        <th>New Status</th>
+                                                        <th>Remark</th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6" id="special_intake_change_div" style="display:none">
+                                    <div class="box box-default direct-chat direct-chat-warning" style="border-top-color:#7d4756;border-top-width: thin;">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Change Intake</h3>
+
+                                            <div class="box-tools pull-right">
+
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+
+                                                @*<button type="button" class="btn btn-box-tool" data-widget="remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>*@
+                                            </div>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                            <div class="form-group col-md-12" id="div_view_special_change_intake">
+                                                <label for="exampleInputProgram"> Intake</label>
+                                                <select name="" id="view_special_change_intake" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <button type="button" class="btn btn-default pull-right" id="change_intake_inquiry_button_for_special"><i class="fa fa-repeat"></i> Change</button>
+                                        </div>
+                                        <!-- /.box-footer-->
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6" id="special_delete_inquiry_div" style="display:none">
+                                    <div class="box box-default direct-chat direct-chat-warning" style="border-top-color:#7d4756; border-top-width: thin;">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">Delete Inquiry</h3>
+
+                                            <div class="box-tools pull-right">
+
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+
+                                                @*<button type="button" class="btn btn-box-tool" data-widget="remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>*@
+                                            </div>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                            <div class="form-group col-md-12" id="div_view_special_change_delete_status">
+                                                <label for="exampleInputProgram"> Allocatiions </label>
+                                                <select name="" id="view_special_change_delete_status" class="form-control">
+                                                    <option value="">- select -</option>
+                                                    <option value="1">Just Romove</option>
+                                                    <option value="2">Allocate Special</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group col-md-12" id="div_view_special_change_delete_valid_reason">
+                                                <label for="exampleInputProgram"> Reason </label>
+
+                                                <input type="text" class="form-control" id="view_special_change_delete_valid_reason" placeholder="Valid Reason">
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <div class="col-md-6 has-error text-right">
+                                                <label class="control-label " for="inputError" id="validation_error_deleteinquiry_div" style="font-weight:400;font-size:12px">
+
+                                                </label>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-default pull-right" id="delete_inquiry_button_for_special"> <i class="fa fa-trash"></i> Delete</button>
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-footer-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-lg-4">
+                                <div class="products-list">
+                                    <div class="item">
+                                        <p><b>Counsellor :</b> <span id="view_special_for_all_lead_model_basic_Counselorname"> </span></p>
+                                        <p><b>Status :</b> <span id="view_special_for_all_lead_model_basic_studentstatus">  </span></p>
+                                        <p><b>Marketing Mode :</b> <span id="view_special_for_all_lead_model_basic_marketingmode">  </span></p>
+                                        <p><b>Intake :</b> <span id="view_special_for_all_lead_model_basic_intake">  </span></p>
+                                        <p><b>Program :</b> <span id="view_special_for_all_lead_model_basic_program"> </span></p>
+                                        <p><b>Date :</b> <span id="view_special_for_all_lead_model_basic_date"> </span></p>
+                                        <p><b>Branch :</b> <span id="view_special_for_all_lead_model_basic_Branch"> </span></p>
+                                        <p><b>DOB :</b> <span id="view_special_for_all_lead_model_basic_dob"> </span></p>
+                                        <p><b>Address :</b> <span id="view_special_for_all_lead_model_basic_address">  </span></p>
+                                        <p><b>Pathway :</b> <span id="view_special_for_all_lead_model__basic_pathway">  </span></p>
+                                        <p><b>School :</b> <span id="view_special_for_all_lead_model__basic_school">  </span></p>
+                                        <p><b>School Type :</b> <span id="view_special_for_all_lead_model_basic_school_type"> </span></p>
+                                        <p><b>Roster :</b> <span id="view_special_for_all_lead_model_basic_roster"> </span></p>
+                                        <p><b>Identification number :</b> <span id="view_special_for_all_lead_model_basic_identification_number"> </span></p>
+                                        <p><b>Source of funds :</b> <span id="view_special_for_all_lead_model_basic_source_of_funds"> </span></p>
+                                        <p><b>Created By :</b> <span id="view_special_for_all_lead_model_basic_created_by"> </span></p>
+                                        <p><b>Agent or General :</b> <span id="view_special_for_all_lead_model_basic_Inquiry_type"> </span></p>
+                                        <p><b>Next Reminder Date:</b> <span id="view_special_for_all_lead_model_basic_Next_Reminder_Date"> </span></p>
+                                        <p><b>Last Contacted Date :</b> <span id="view_special_for_all_lead_model_basic_Last_contacted_date"> </span></p>
+                                        <div id="div_view_special_for_all_lead_model_basic_agent_name">
+                                            <p>Agent name : <span id="view_special_for_all_lead_model_basic_agent_name"> </span></p>
+                                        </div>
+                                        <div id="div_view_special_for_all_lead_model_basic_student_ref_name">
+                                            <p>Student Refferal name : <span id="view_special_for_all_lead_model_basic_student_ref_name"> </span></p>
+                                        </div>
+                                        <div id="div_view_special_for_all_lead_model_basic_student_ref_partner_marketing">
+                                            <p>Refferal Partner marketing: <span id="view_special_for_all_lead_model_basic_ref_partner_marketing"> </span></p>
+                                        </div>
+                                        <div id="div_view_special_for_all_lead_model_basic_ref_partner_name">
+                                            <p>Refferal Partner : <span id="view_special_for_all_lead_model_basic_ref_partner_name"> </span></p>
+                                        </div>
+                                        <div id="div_view_special_for_all_lead_model_basic_Not_prospective_reason">
+                                            <p>NP Reason : <span id="view_special_for_all_lead_model_basic_Not_prospective_reason"> </span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    @*<div class="card-footer">
+                            <button type="submit" id="notification_sumbit_button" class="btn btn-default col-md-offset-10" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="bulk_interaction_lead_model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:90%; margin:auto;margin-top:10vh;max-height:80vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Database follow ups - Update Intereraction</h3>
+                    @*<i class="close fa fa-lg fa-window-close col-sm-1" id="bulk_interaction_lead_model_close" style="margin-top: -15px;"></i>*@
+                    <i class="close fa fa-lg fa-window-close" style="margin-top: -15px; opacity: 1" id="bulk_interaction_lead_model_close"></i>
+                </div>
+                <form role="form">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4">
+                                <div class="products-list">
+                                    <div class="item">
+                                        <div class="product-img">
+                                            <img src="~/AdminLTE/components/adminLTE/img/avatar5.png" alt="Product Image">
+
+                                        </div>
+                                        <div class="product-info">
+                                            <a class="product-title">
+                                                <span class="label label-warning pull-right" id="bulk_interaction_lead_model_basic_spanid">0001</span>
+                                                <p id="bulk_interaction_lead_model_basic_Name"></p>
+
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="box box-widget widget-user-2">
+                                        <div class="box-footer no-padding">
+                                            <ul class="nav nav-stacked">
+                                                <li><a href="#" id="bulk_interaction_lead_model_basic_Contactnumber_1"><i class="fa fa-phone" aria-hidden="true"></i><span class="pull-right badge bg-aqua">Call</span></a></li>
+                                                <li><a href="#" id="bulk_interaction_lead_model_basic_Contactnumber_2"><i class="fa fa-phone" aria-hidden="true"></i><span class="pull-right badge bg-aqua">Call</span></a></li>
+                                                <li><a href="#" id="bulk_interaction_lead_model_basic_Email"><i class="fa fa-envelope" aria-hidden="true"></i> <span class="pull-right badge bg-red">Send E-Mail</span></a></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="products-list">
+
+                                        <div class="item">
+                                            <p><b>Lead owner :</b> <span id="bulk_interaction_lead_model_basic_counselor"> </span></p>
+                                            <p><b>Status :</b> <span id="bulk_interaction_lead_model_basic_studentstatus">  </span></p>
+                                            <p><b>School :</b> <span id="bulk_interaction_lead_model_basic_school">  </span></p>
+                                            @*<p><b>Marketing Mode :</b> <span id="bulk_interaction_lead_model_basic_marketingmode">  </span></p>*@
+                                            <p><b>Database name :</b> <span id="bulk_interaction_lead_model_basic_databasename">  </span></p>
+                                            <p><b>Recorded Date :</b> <span id="bulk_interaction_lead_model_basic_date"> </span></p>
+                                            <p><b>Created by :</b> <span id="bulk_interaction_lead_model_created_by"> </span></p>
+                                            <p><b>Last contacted date :</b> <span id="bulk_interaction_lead_model_last_contacted_date"> </span></p>
+                                            <p><b>Next reminder date :</b> <span id="bulk_interaction_lead_model_next_reminder_date"> </span></p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-8  col-lg-8">
+
+                                <div class="form-group ">
+                                    <div class="form-group col-md-7" style="margin-left:0px;">
+
+                                        <input type="text" hidden id="bulk_interaction_model_interaction_lead_id" />
+                                        <label class="" for="exampleInputName" style="text-align:left;width:100%">Interaction Status</label>
+
+                                        <select name="call_status" id="bulk_interaction_model_interaction_status" class="form-control"></select>
+
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputContact">Interaction Remark</label>
+                                        <input type="text" class="form-control" id="bulk_interaction_model_interaction_remark" placeholder="Enter interaction remark">
+                                    </div>
+                                    <div class="form-group col-md-6" id="div_interaction_model_interaction_status">
+                                        <label for="exampleInputContact">Student Status</label>
+                                        <select name="" id="bulk_interaction_model_student_status_according_to_interaction_status" class="form-control"></select>
+                                    </div>
+                                    <div class="form-group col-md-7" id="div_interaction_model_next_reminder">
+                                        <label for="exampleInputProgram">Next Sheduled Time</label>
+                                        <input type="text" readonly class="form-control" id="bulk_interaction_model_interaction_next_reminder" value="" placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-12" id="bulk_div_interaction_model_interaction_notprospective_reason" style="display:none">
+                                        <label for="exampleInputProgram">Not Prospective Reason</label>
+                                        <input type="text" class="form-control" id="bulk_interaction_model_interaction_not_prospective_reason" placeholder="">
+                                    </div>
+                                    @*<div class="form-group col-md-6" id="div_interaction_model_interaction_future_intake" style="display:none">
+                                            <label for="exampleInputProgram"> Intake</label>
+                                            <select name="" id="bulk_interaction_model_interaction_intake" class="form-control"></select>
+                                        </div>*@
+                                    <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Student Followings</label>
+                                        <select name="" id="bulk_update_lead_model_update_following_status" class="form-control">
+                                            <option value="1">Follow more</option>
+                                            <option value="2">Transfer to a Counselor</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Intended pathway</label>
+                                        <select name="" id="bulk_update_lead_model_update_pathway" class="form-control"></select>
+                                    </div>
+                                    <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Branch</label>
+                                        <select name="" id="bulk_update_lead_model_update_branch" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12" style="margin-top:10px;">
+
+
+
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Student details</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+
+
+
+                                    <div class="form-group col-md-2 col-sm-3 col-xs-5">
+                                        <label for="exampleInputContact">Title</label>
+                                        <select name="cars" id="bulk_update_lead_model_update_title" class="form-control">
+                                            <option value="Mr.">Mr.</option>
+                                            <option value="Mrs.">Mrs.</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Ms">Ms</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-10 col-sm-9 col-xs-12">
+                                        <label for="exampleInputContact">Name</label>
+                                        <input type="text" style="display:none" class="form-control" id="bulk_model_id_user" placeholder="Enter Name">
+                                        <input type="text" style="display:none" class="form-control" id="bulk_model_id_counselor" placeholder="Enter Name">
+                                        <input type="text" style="display:none" class="form-control" id="bulk_model_id_bulk_id" placeholder="Enter Name">
+                                        <input type="text" class="form-control readonly" id="bulk_update_lead_model_update_name" placeholder="Enter Name" readonly>
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-8 col-xs-12">
+                                        <label for="exampleInputContact">Contact Number</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Contactnumber" placeholder="Contact Number">
+                                    </div>
+
+
+                                    <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                                        <label for="sd_contact">Optional contact no 1</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Contactnumber2" placeholder="Contact Number">
+
+                                    </div>
+                                    <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                                        <label for="sd_contact">Optional contact no 2</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Contactnumber3" placeholder="Contact Number">
+
+                                    </div>
+                                    <div class="form-group col-md-3  col-sm-8 col-xs-12">
+                                        <label for="sd_contact">Optional contact no 3</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Contactnumber4" placeholder="Contact Number">
+
+                                    </div>
+                                    <div class="form-group col-md-4 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">E-mail</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Email" placeholder="E-mail">
+                                    </div>
+                                    <div class="form-group  col-md-4 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Program</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_Program" placeholder="Program">
+                                    </div>
+                                    <div class="form-group col-md-3 col-sm-8 col-xs-10">
+                                        <label for="exampleInputProgram">Date Of Birth</label>
+                                        <input type="text" readonly class="form-control" id="bulk_update_lead_model_update_dob" placeholder="Date">
+                                    </div>
+
+
+
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Address</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_address" placeholder="Input Address">
+                                    </div>
+                                    <div class="form-group col-md-4 col-sm-8 col-xs-12">
+                                        <label for="exampleInputProgram">School / Organisation</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_school" placeholder="Input School / Organization">
+                                    </div>
+                                    <div class="form-group col-md-4 col-sm-8 col-xs-12">
+                                        <label for="exampleInputProgram">Identification Number</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_identification" placeholder="Identification Number">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputProgram">What best describes about you</label>
+                                            <div class="col-sm-12" id="bulk_student_best_qualification">
+
+
+                                            </div>
+                                            <div class="" @*style="display:none"*@ id="div_sylabus_type">
+                                                <label for="sd_ew_sylabustype">Sylabus Type</label>
+                                                <div class="col-sm-12">
+                                                    <label class="radio-inline">
+
+                                                        <input type="radio" name="bulk_sd_ew_sylabustype" value="London" id="bulk_London">London
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="bulk_sd_ew_sylabustype" value="Local" id="bulk_Local">Local
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div id="ol_result" @*style="display:none; "*@>
+                                                <label for="sd_ew_sylabustype">O/L Results</label>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> A </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_a" placeholder="#">
+                                                        </div>
+                                                        @*<label for="exampleInputProgram">A</label>
+                                                            <input type="number" class="form-control" id="model_user_ol_a" placeholder="">*@
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> B </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_b" placeholder="#">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> C </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_c" placeholder="#">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> D </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_d" placeholder="#">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> W </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_f" placeholder="#">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-sm-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> English </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update_ol_english" placeholder="Result">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="al_result" @*style="display:none; "*@>
+                                                <label for="sd_ew_sylabustype">A/L Results</label>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Subject </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_s1" placeholder="Enter A/L subject 1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Grade </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_r1" placeholder="Result">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Subject </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_s2" placeholder="Enter A/L subject 2">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Grade </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_r2" placeholder="Result">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group col-lg-4 col-md-6 col-sm-8  col-xs-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Subject </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_s3" placeholder="Enter A/L subject 3">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-md-3 col-sm-4  col-xs-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Grade </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_r3" placeholder="Result">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Subject </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_s4" placeholder="Enter A/L subject 4">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> Grade </span>
+                                                            <input type="text" class="form-control" id="bulk_update_lead_model_update__al_r4" placeholder="Result">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group col-md-4 col-sm-8 col-xs-12">
+
+
+                                        <label for="exampleInputProgram">Source of Funds</label>
+                                        <select name="" id="bulk_update_lead_model_update_sof" class="form-control"></select>
+
+
+
+
+
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <label for="exampleInputProgram">Remark</label>
+                                        <input type="text" class="form-control" id="bulk_update_lead_model_update_remark" placeholder="Enter Remark">
+                                    </div>
+
+
+
+
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+
+                                    </div>
+                                    <div class="col-lg-10 has-error text-right">
+                                        <label class="control-label " for="inputError" id="bulk_validation_error">
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer text-center">
+
+                                </div>
+                                <!-- /.box-footer -->
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-10 has-error text-right">
+                                <label class="control-label " for="inputError" id="bulk_validation_error_interaction">
+
+                                </label>
+
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" id="bulk_interaction_model_interaction_sumbit_button" class="btn btn-default" style="margin-bottom:5px; border-color:#ffcb08;color:#7d4756"><i class="fa  fa-check-square-o"></i> Submit details</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    @*<div class="card-footer">
+                            <button type="submit" id="notification_sumbit_button" class="btn btn-default col-md-offset-10" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="Bulk_lead_DublicateFound_Model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:80%; margin:auto;margin-top:25vh;max-height:50vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Dublicate Found</h3>
+                    <i id="Bulk_lead_DublicateFound_Model_close" class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;"></i>
+                </div>
+                @*<div class="panel-body">
+                        <table class="table table-bordered" id="bulk_duplicate_table_records" style="width: 80%;margin: auto; margin-top: 10px; margin-bottom: 10px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="text-align: center">Name</th>
+                                    <th scope="col" style="text-align: center">Contact Number</th>
+                                    <th scope="col" style="text-align: center">Email</th>
+                                    <th scope="col" style="text-align: center">Program</th>
+                                    <th scope="col" style="text-align: center">Status</th>
+                                    <th scope="col" style="text-align: center">Counselor</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center"></tbody>
+                        </table>
+                    </div>*@
+
+                <div class="card">
+                    <div class="card-body" style="font-size:13px;    padding: 10px;">
+                        <table class="display" id="Bulk_lead_DublicateFound_Model_DuplicateFoundTable" style="max-width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Con. Num.</th>
+                                    <th>Optional Con. Num.1</th>
+                                    <th>Optinal Con. Num.2</th>
+                                    <th>Optional Con. Num.3</th>
+                                    <th>Email</th>
+
+                                    <th>Counselor</th>
+                                    <th>MKT Mode</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                    @*<th></th>*@
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="col-lg-12">
+                    <div class="card-footer" style="margin:10px;">
+                        <button type="submit" class="btn btn-default pull-right" id="bulk_sd_enquiry_button_skip" style="margin-bottom:5px;border-color:#ffcb08;color:#7d4756">Skip & Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Updatelead_lead_DublicateFound_Model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:80%; margin:auto;margin-top:25vh;max-height:50vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Dublicate Found</h3>
+                    @*<i id="Updatelead_DublicateFound_Model_close" class="close fa fa-lg fa-window-close col-sm-1" style="margin-top: -15px;"></i>*@
+                    <i class="close fa fa-lg fa-window-close" id="Updatelead_DublicateFound_Model_close" style="margin-top: -15px; opacity: 1"></i>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered" id="Updatelead_duplicate_table_records" style="width: 100%;margin: auto; margin-top: 10px; margin-bottom: 10px;">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align: center">Name</th>
+                                <th scope="col" style="text-align: center">Primary Con. Num</th>
+                                <th scope="col" style="text-align: center">Opt. con. Num. 1</th>
+                                <th scope="col" style="text-align: center">Opt. con. Num. 2</th>
+                                <th scope="col" style="text-align: center">Opt. con. Num. 3</th>
+                                <th scope="col" style="text-align: center">Email</th>
+                                <th scope="col" style="text-align: center">Counselor</th>
+                                <th scope="col" style="text-align: center">Status</th>
+                                <th scope="col" style="text-align: center">Date of record</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: center"></tbody>
+                    </table>
+                </div>
+
+                <!-- /.card-body -->
+                <div class="card-footer" style="margin:10px;">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-default pull-right" id="Updatelead_sd_enquiry_button_skip" style="margin-bottom:5px;border-color:#ffcb08;color:#7d4756 ;margin:10px;">Skip & Save</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="Bulk_Allocated_Counselor_Model" class="modal">
+        <div class="modal-content" style="border-radius: 10px;width:35%; margin:auto;margin-top:25vh;max-height:50vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:thick;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Allocated Counselor</h3>
+                    <i id="bulk_Allocated_Counselor_close" class="close fa fa-window-close col-sm-1" style="margin-top: -15px;"></i>
+                </div>
+                <center>
+                    <div class="callout callout-warning">
+
+                        <h4 id="bulk_counselor_name"></h4>
+
+                        <p id="bulk_counselor_Active"></p>
+                    </div>
+                </center>
+                <!-- /.card-body -->
+                @*<div class="card-footer">
+
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="ProfileModelAdvance" class="modal">
+
+        <div class="modal-content" style="border-radius: 10px;width:40%; margin:auto;margin-top:10vh;max-height:70vh;overflow-x:auto ">
+            <div class="panel panel-default" style="border-top-width:medium;border-top-color:#7d4756">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Profile</h3>
+                    <i class="close fa fa-lg fa-window-close" id="ProfileModelAdvance_close" style="margin-top: -15px; opacity: 1"></i>
+                </div>
+                <form role="form">
+                    <div class="panel-body">
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle" id="ProfileModelAdvanceActiveImageName"
+                                         src="~/AdminLTE/components/adminLTE/img/avatar5.png"
+                                         alt="User profile picture">
+                                </div>
+
+                                <h3 class="profile-username text-center" id="ProfileModelAdvanceUserName"></h3>
+
+                                <p class="text-muted text-center" id="ProfileModelAdvanceUserDesignation"></p>
+
+                                @*<ul class="list-group list-group-unbordered mb-auto">
+                                        <li class="list-group-item">
+                                            <b>Personal Target</b> <a class="float-right">@loggeduserTarget</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Following</b> <a class="float-right">543</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Friends</b> <a class="float-right">13,287</a>
+                                        </li>
+                                    </ul>*@
+
+
+
+                                @*<a href="#" class="btn btn-default btn-block" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red"><b>Submit</b></a>*@
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="input-group">
+                                <input type="hidden" id="ProfileModelAdvanceActiveInputStaffID" />
+                                <!-- /btn-group -->
+                                <select name="" id="ProfileModelAdvanceActiveInput" class="form-control">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">InActive</option>
+                                </select>
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" id="ProfileModelAdvanceChangeActiveButton">Change</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        @*<button type="submit" id="dashboard_sumbit_button" class="btn btn-default col-md-offset-10" style="margin-bottom:5px; background-color:#ffcb08;border-color:black;color:red">Submit</button>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/Page_Scripts/LeadMaster.js"></script>
+</body>
+</html>
