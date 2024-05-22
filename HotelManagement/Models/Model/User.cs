@@ -18,5 +18,6 @@ namespace HotelManagement.Models.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public int Is_Staff { get; set; }
+        public Status Department { get; set; }
     }
 }

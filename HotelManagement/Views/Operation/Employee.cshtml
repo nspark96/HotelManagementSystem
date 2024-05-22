@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+}
+
+
+<div class="col-md-11">
+    <div class="panel panel-default SVMS-panel-public">
+        <div class="panel-heading SVMS-panel-header">
+            <h3 class="panel-title">Employee Management</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <table class="display" id="HoteL_Management_Employee_Management">
+                    <thead>
+                        <tr>
+                            @*<th>Inquiry Id</th>*@
+
+                            <th>Fisrt Name</th>
+                            <th>Surname</th>
+                            <th>Designation</th>
+                            <th>Department</th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="col-md-1">
+    <div class="col-lg-1 col-xs-1" style="padding-left: 0px;">
+
+        <a href="javascript:AddStaff()" class="btn btn-app" style="border-width:thin !important;border-color:#ffcb08 !important;">
+            <i class="fa fa-plus"></i> Add Staff
+        </a>
+    </div>
+</div>
+<div id="Hotel_Employee_Management_Model" class="modal" style="display:none">
+    <div class="modal-content" style="border-radius: 10px;width:70%; margin:auto;margin-top:15vh;max-height:80vh;overflow-x:auto ">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title ">Employee Management</h3>
+                <i class="close fa fa-lg fa-window-close pull-right" id="Hotel_Employee_Management_Model_close" style="margin-top: -15px; opacity: 1"></i>
+            </div>
+
+            <div class="panel-body">
+                <div class="row" style="margin:0 !important">
+                    <div class="col-md-4">
+                        <div class="products-list">
+
+                            <div class="products-list">
+                                <div class="item" style=" padding: 0px 0; font-size:1.5rem">
+                                    <input type="hidden" id="Hotel_Employee_Management_ID_Hidden" />
+                                    @*<input type="hidden" id="SIMS_Timetable_Lecture_Branch_ID_Hidden" />*@
+                                    @*<p style="margin: 0 0 7px;"><i class="fa fa-hashtag"> </i><b> Week:</b> <span id="SIMS_TIMETABLE_LECTURE_SCHEDULE_EDIT_VIEW_WEEK"> </span> </p>*@
+                                    <p style="margin: 0 0 7px;"><i class="fa fa-calendar-o"> </i><b> Employee </b><span id="Hotel_Employee_Management_Model_Employee"></span> </p>
+                                    <p style="margin: 0 0 7px;"><i class="fa fa-user"> </i><b> Customer </b><span id="Hotel_Employee_Management_Model_Customer"></span> </p>
+
+                                    <p style="margin: 0 0 7px;"><i class="fa fa-clock-o"> </i><b> Date </b><span id="Hotel_Employee_Management_Model_Date"></span> </p>
+                                    <p style="margin: 0 0 7px;"><i class="fa fa fa-map-marker"> </i><b> Status </b><span id="Hotel_Employee_Management_Model_Status"></span> </p>
+
+
+                                </div>
+                                <button type="button" class="btn btn-default btn-block" style="border-color: #001D6E" id="EDIT_Hotel_Employee_Management"> <i class="fa fa-exclamation" aria-hidden="true"></i> Edit Management</button>
+                                <button type="button" class="btn btn-default btn-block" style="border-color: #001D6E" id="Delete_Hotel_Employee_Management"> <i class="fa fa-exclamation" aria-hidden="true"></i> Remove Management</button>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box col-md-8" style="border-top: 0px;" id="Hotel_Employee_Management_Model_EDIT_DIV">
+                        <h5>Update Employee Management </h5>
+                        <div class="col-md-5 form-group">
+                            <label>Customer</label>
+                            <select name="LecPayTP" id="Hotel_Employee_Management_Model_EDIT_Customer" class="form-control" required="">
+                            </select>
+                        </div>
+
+                        <div class="col-md-5 form-group">
+                            <label>Status</label>
+                            <select name="LecPayTP" id="Hotel_Employee_Management_Model_EDIT_Status" class="form-control" required=""></select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <button type="submit" class="btn btn-default pull-right" id="Hotel_Employee_Management_Model_EDIT_Submit" style="margin-bottom:5px;border-color:#ffcb08;color:black"><i class="fa fa-pencil-square-o"></i> Update Resevation Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="Hotel_Employee_Add_Model" class="modal" style="display:none">
+    <div class="modal-content" style="border-radius: 10px;width:70%; margin:auto;margin-top:15vh;max-height:80vh;overflow-x:auto ">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title ">Add Staff</h3>
+                <i class="close fa fa-lg fa-window-close pull-right" id="Hotel_Employee_Model_Add_close" style="margin-top: -15px; opacity: 1"></i>
+            </div>
+
+            <div class="panel-body">
+                <div class="row" style="margin:0 !important">
+
+
+                    <div class="box col-md-8" style="border-top: 0px;" id="Hotel_Employee_Model_EDIT_DIV">
+                        <div class="col-md-4 form-group">
+                            <label>Staff ID</label>
+                            <input type="text" class="form-control" id="Hotel_Employee_Model_Add_StaffID" />
+
+                        </div>
+                        <div class="col-md-7 form-group">
+                            <label>First name</label>
+                            <select name="LecPayTP" id="Hotel_Employee_Model_Add_FName" class="form-control" required="">
+                            </select>
+                        </div>
+                        <div class="col-md-5 form-group">
+                            <label>Surname</label>
+                            <input type="text" class="form-control" id="Hotel_Employee_Model_Add_SurName" />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" id="Hotel_Employee_Model_Add_SurName" />
+                            
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>Department</label>
+                            <select name="LecPayTP" id="Hotel_Employee_Model_Add_Department" class="form-control" required="">
+                                <option value="1"> Manager
+                                <option>
+                                <option value="2"> Chef
+                                <option>
+                                <option value="3"> Waiter
+                                <option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 form-group">
+                            <label>Username</label>
+                            <select name="LecPayTP" id="Hotel_Employee_Model_Add_Username" class="form-control" required="">
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <button type="submit" class="btn btn-default pull-right" id="Hotel_Employee_Model_Add_Submit" style="margin-bottom:5px;border-color:#ffcb08;color:black"><i class="fa fa-pencil-square-o"></i> Add Reservation</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Operation/Employee.js"></script>

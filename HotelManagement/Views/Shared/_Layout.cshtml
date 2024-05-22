@@ -8,7 +8,8 @@
         string loggedUsername = Session["Name"] as string;
     }*@
 @{
-    string loggedUserName = Session["Name"] as string;
+    string loggedUserName = Session["FirstName"] as string;
+    string loggedUserFullName = Session["FirstName"] as string + " " +Session["LastName"] as string;
     string loggedUserRole = Session["Role"] as string;
     string loggedUserID = Session["UserID"] as string;
     string loggeduserDesignation = Session["Designation"] as string;
@@ -137,69 +138,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
 
-                        @{
-                            if (loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
-                            {
-                                <li class="dropdown user user-menu">
-
-                                    <a href="@Url.Action("NewStudents", "Student")">
-                                        <i class="fa fa-child"></i>
-                                        <span class="label label-default" id="new_notification"></span>
-                                    </a>
+                            @*<a href="@Url.Action("BulkNotificationList", "Notification")">
+                                <i class="fa fa-users"></i>
+                                <span class="label label-default" id="bulk_notification"></span>
+                            </a>*@
 
 
-                                </li>
-                            }
-                            if (loggedUserRole == "Counselor" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
-                            {
-                                <li class="dropdown user user-menu">
-
-                                    <a href="@Url.Action("Appoinments", "Student")">
-                                        <i class="fa fa-calendar"></i>
-                                        <span class="label label-default" id="crm_Appoinments"></span>
-                                    </a>
-
-
-                                </li>
-                            }
-                            if (loggedUserRole == "Counselor" || loggedUserRole == "CallCenter" || loggedUserRole == "Manager" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
-                            {
-                                <li class="dropdown user user-menu">
-
-                                    <a href="@Url.Action("BulkNotificationList", "Notification")">
-                                        <i class="fa fa-users"></i>
-                                        <span class="label label-default" id="bulk_notification"></span>
-                                    </a>
-
-
-                                </li>
-                            }
-                            if (loggedUserRole == "Counselor" || loggedUserRole == "Admin" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
-                            {
-                                <li class="dropdown user user-menu">
-
-                                    <a href="@Url.Action("NotificationList", "Notification")">
-                                        <i class="fa fa-bell"></i>
-                                        <span class="label label-default" id="user_notification"></span>
-                                    </a>
-
-                                </li>
-
-                            }
-                            if (loggedUserRole == "Admin" || loggedUserRole == "Reception" || loggedUserRole == "Manager" || loggedUserRole == "ITAdmin" || loggedUserRole == "OperationalAdmin")
-                            {
-                                <li class="dropdown user user-menu">
-
-                                    <a href="@Url.Action("ALLNotificationList", "Notification")">
-                                        <i class="fa fa-list"></i>
-                                        <span class="label label-default" id=""></span>
-                                    </a>
-
-
-                                </li>
-                            }
-                        }
+                        </li>
+                      
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
 
@@ -207,32 +155,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
                                 @*<img src="./components/adminLTE/img/user2-160x160.jpg" class="user-image" alt="User Image">*@
-                                <img src="~/AdminLTE/components/adminLTE/img/@imageurl" class="user-image" alt="User Image" />
+                                @*<img src="~/AdminLTE/components/adminLTE/img/@imageurl" class="user-image" alt="User Image" />*@
+                                <i class="fa fa-user-o"></i>
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs" id="user-account-name-navbar">@loggedUserName</span>
+                                <span class="hidden-xs" id="user-account-name-navbar">@loggedUserFullName</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
                                     <img src="~/AdminLTE/components/adminLTE/img/@imageurl" class="img-circle" alt="User Image">
                                     <p id="user-account-name"> </p>
-                                    <p>@loggedUserName</p>
+                                    <p>@loggedUserFullName</p>
                                     <p><small>@loggeduserDesignation</small></p>
                                 </li>
                                 <!-- Menu Body -->
                                 @*<li class="user-body">
-                                      <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                          <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                          <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                          <a href="#">Friends</a>
-                                        </div>
-                                      </div>
-                                    </li>*@
+                  <div class="row">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Friends</a>
+                    </div>
+                  </div>
+                </li>*@
                                 <!-- Menu Footer-->
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
@@ -258,11 +207,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="sidebar-menu" data-widget="tree" id="sidebar_pagaaction">
 
                     <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-tachometer"></i><span>View Dashboard<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
-                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-bed"></i><span>Room Resevation<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
-                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-building-o"></i><span>Hall Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
-                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-cutlery"></i><span>Kitchen/ Restuarent<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("RoomReservation", "Operation")"><i class="fa fa-bed"></i><span>Room Resevation<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("HallManagement", "Operation")"><i class="fa fa-building-o"></i><span>Hall Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Restaurants", "Operation")"><i class="fa fa-cutlery"></i><span>Kitchen/ Restuarent<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
                     <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-beer"></i><span>Bar / Cashier<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
-                    <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-user-o"></i><span>Employee Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
+                    <li><a href="@Url.Action("Employee", "Operation")"><i class="fa fa-user-o"></i><span>Employee Management<span class="pull-right-container"><small class="label pull-right bg-white" id="user_dashboard_count"></small></span></span></a> </li>
 
 
 

@@ -1,0 +1,264 @@
+﻿
+@{
+    ViewBag.Title = "Restaurants";
+}
+
+<style>
+    body {
+        margin-top: 20px;
+        background: #f1f2f7;
+    }
+    /*panel*/
+    .panel {
+        border: none;
+        box-shadow: none;
+    }
+
+    .panel-heading {
+        border-color: #eff2f7;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .panel-title {
+        color: #2A3542;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+
+    /*product list*/
+
+    .prod-cat li a {
+        border-bottom: 1px dashed #d9d9d9;
+    }
+
+    .prod-cat li a {
+        color: #3b3b3b;
+    }
+
+    .prod-cat li ul {
+        margin-left: 30px;
+    }
+
+        .prod-cat li ul li a {
+            border-bottom: none;
+        }
+
+            .prod-cat li ul li a:hover, .prod-cat li ul li a:focus, .prod-cat li ul li.active a, .prod-cat li a:hover, .prod-cat li a:focus, .prod-cat li a.active {
+                background: none;
+                color: #ff7261;
+            }
+
+    .pro-lab {
+        margin-right: 20px;
+        font-weight: normal;
+    }
+
+    .pro-sort {
+        padding-right: 20px;
+        float: left;
+    }
+
+    .pro-page-list {
+        margin: 5px 0 0 0;
+    }
+
+    .product-list img {
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+    }
+
+    .product-list .pro-img-box {
+        position: relative;
+    }
+
+    .adtocart {
+        background: #fc5959;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        color: #fff;
+        display: inline-block;
+        text-align: center;
+        border: 3px solid #fff;
+        left: 35%;
+        bottom: -25px;
+        position: absolute;
+    }
+
+        .adtocart i {
+            color: #fff;
+            font-size: 25px;
+            line-height: 42px;
+        }
+
+    .pro-title {
+        color: #5A5A5A;
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .product-list .price {
+        color: #fc5959;
+        font-size: 15px;
+    }
+
+    .pro-img-details {
+        margin-left: -15px;
+    }
+
+        .pro-img-details img {
+            width: 100%;
+        }
+
+    .pro-d-title {
+        font-size: 16px;
+        margin-top: 0;
+    }
+
+    .product_meta {
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+        margin: 15px 0;
+    }
+
+        .product_meta span {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .product_meta a, .pro-price {
+            color: #fc5959;
+        }
+
+    .pro-price, .amount-old {
+        font-size: 18px;
+        padding: 0 10px;
+    }
+
+    .amount-old {
+        text-decoration: line-through;
+    }
+
+    .quantity {
+        width: 120px;
+    }
+
+    .pro-img-list {
+        margin: 10px 0 0 -15px;
+        width: 100%;
+        display: inline-block;
+    }
+
+        .pro-img-list a {
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+    .pro-d-head {
+        font-size: 18px;
+        font-weight: 300;
+    }
+</style>
+
+
+<div class="panel panel-default SVMS-panel-public">
+    <div class="panel-heading ">
+        <h3 class="panel-title">Restaurants</h3>
+    </div>
+    <div class="panel-body">
+
+
+        <div class="col-md-8 col-sm-5">
+            <div class="row product-list" id="Restaurants_Food_List">
+
+
+                <!--<div class="col-md-3 col-lg-3">
+                    <section class="panel">
+                        <div class="pro-img-box">
+                            <img src="https:// www.bootdey.com/image/250x220/FFB6C1/000000" alt="" />
+
+                            <button class="adtocart">
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>-->
+                @*<a href="#" class="adtocart">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>*@
+                <!--</div>
+
+                        <div class="panel-body text-center">
+                            <div class="item_name_res">
+                                <h4>
+                                    <a href="#" class="pro-title" id="">
+                                        F/R BBQ Chicken
+                                    </a>
+                                </h4>
+                            </div>
+                            <p class="price">Rs.900.00</p>
+                        </div>
+                    </section>
+                </div>-->
+                @*<div class="col-md-3 col-lg-3">
+                        <section class="panel">
+                            <div class="pro-img-box">
+                                <img src="../Images/fried_rice.jpg" alt="" />
+                                <button class="adtocart"><i class="fa fa-shopping-cart"></i></button>
+                            </div>
+                            <div class="panel-body text-center">
+                                <div class="item_name_res" id="' + data[i].Name + '">
+                                    <h4> </h4>
+                                    <p class="price"> Rs:  </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>*@
+
+
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 ">
+                <div class="card-header card-2">
+                    <p class="card-text text-muted mt-md-4 mb-2 space"> Food Cart </p>
+                    <hr class="my-2">
+                </div>
+
+                <div class="container-fluid" id="">
+                    <div class="row">
+                        @*<div class="col-sm-6 col-md-6 bg-success" >
+                                <p>F/R BBQ Chicken</p>
+
+                            </div>*@
+                        <table class="table" id="CartTableTemp">
+                            <tr>
+                                
+                            </tr>
+                        </table>
+                        <ul id="cart"></ul>
+                        <div id="total">Total Amount: $0</div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="card-body">
+                    <div class="row mb-5 mt-4 ">
+                        <div class="col-md-12 col-lg-12 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">Order</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Operation/Restaurants.js"></script>

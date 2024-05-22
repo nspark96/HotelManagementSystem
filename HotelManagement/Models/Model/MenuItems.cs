@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HotelManagement.Models.Model
 {
-    public class MenuItems
+    public class MenuItems:Entity
     {
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
